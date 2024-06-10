@@ -1,21 +1,21 @@
 #include "String.h"
 
-String::String()
+String::String() // Default constructor
 {
 	size = 0;
 	data = new char[1];
 	data[0] = '\0';
 }
 
-String::String(const char* c_str)
+String::String(const char* cStr) // Constructor for a sequence of characters
 {
-	size = strlen(c_str);
+	size = strlen(cStr);
 	data = new char[size + 1];
-	std::copy(c_str, c_str + size, data);
+	std::copy(cStr, cStr + size, data);
 	data[size] = '\0';
 }
 
-String::String(const String& other)
+String::String(const String& other) // Copy constructor
 {
 	size = other.size;
 	data = new char[size + 1];
@@ -23,7 +23,7 @@ String::String(const String& other)
 	data[size] = '\0';
 }
 
-String::String(String&& other) throw()
+String::String(String&& other) throw() // Move constructor
 {
 	size = other.size;
 	data = other.data;
@@ -31,22 +31,22 @@ String::String(String&& other) throw()
 	other.size = 0;
 }
 
-String::~String()
+String::~String() // Destructor
 {
 	delete[] data;
 }
 
-char* String::c_str() const
+char* String::cStr() const // C-string
 {
 	return data;
 }
 
-size_t String::length() const
+size_t String::length() const // String length
 {
 	return size;
 }
 
-String& String::operator=(const String& other)
+String& String::operator=(const String& other) // Assignment operator with copying
 {
 	if (&other != this)
 	{
@@ -58,7 +58,7 @@ String& String::operator=(const String& other)
 	return *this;
 }
 
-String& String::operator=(String&& other) throw()
+String& String::operator=(String&& other) throw() // Assignment operator with moving
 {
 	if (&other != this)
 	{
@@ -71,70 +71,70 @@ String& String::operator=(String&& other) throw()
 	return *this;
 }
 
-String& String::operator=(const char* c_str)
+String& String::operator=(const char* cStr) // Assignment operator with copying (C-style)
 {
 	delete[] data;
-	size = strlen(c_str);
+	size = strlen(cStr);
 	data = new char[size + 1];
-	std::copy(c_str, c_str + size, data);
+	std::copy(cStr, cStr + size, data);
 	data[size] = '\0';
 	return *this;
 }
 
-String& String::operator+=(const String& other)
+String& String::operator+=(const String& other) // Increment operator
 {
-	char* new_data = new char[size + other.size + 1];
-	std::copy(data, data + size, new_data);
-	std::copy(other.data, other.data + other.size, new_data + size);
+	char* newData = new char[size + other.size + 1];
+	std::copy(data, data + size, newData);
+	std::copy(other.data, other.data + other.size, newData + size);
 	size += other.size;
 	delete[] data;
-	data = new_data;
+	data = newData;
 	data[size] = '\0';
 	return *this;
 }
 
-String& String::operator+=(const char* c_str)
+String& String::operator+=(const char* cStr) // Increment operator (C-style)
 {
-	size_t str_size = strlen(c_str);
-	char* new_data = new char[size + str_size + 1];
-	std::copy(data, data + size, new_data);
-	std::copy(c_str, c_str + str_size, new_data + size);
-	size += str_size;
+	size_t strSize = strlen(cStr);
+	char* newData = new char[size + strSize + 1];
+	std::copy(data, data + size, newData);
+	std::copy(cStr, cStr + strSize, newData + size);
+	size += strSize;
 	delete[] data;
-	data = new_data;
+	data = newData;
 	data[size] = '\0';
 	return *this;
 }
 
-String operator+(const String& lvalue, const String& rvalue)
+String operator+(const String& lvalue, const String& rvalue) // Addition operator
 {
 	return String(lvalue) += rvalue;
 }
 
-String operator+(const String& lvalue, const char* rvalue)
+String operator+(const String& lvalue, const char* rvalue) // Addition operator (C-style)
 {
 	return String(lvalue) += String(rvalue);
 }
 
-std::ostream& operator<<(std::ostream& os, const String& str)
+std::ostream& operator<<(std::ostream& os, const String& str) // Shift operator
 {
 	os << str.data;
 	return os;
 }
 
-char String::operator[](unsigned index) const
+char String::operator[](unsigned index) const // Indexing operator
 {
 	return data[index];
 }
 
-bool String::operator<(const String& other) const
+bool String::operator<(const String& other) const // Less-than comparison
 {
 	return std::lexicographical_compare(data, data + size,
 		other.data, other.data + other.size,
 		[](char c1, char c2) { return std::tolower(c1) < std::tolower(c2); });
 }
 
-bool String::operator>(const String& other) const
+bool String::operator>(const String& other) const // Greater-than comparison
 {
 	return other < *this;
 }
