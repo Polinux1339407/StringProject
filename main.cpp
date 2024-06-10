@@ -7,27 +7,30 @@
 
 void run_tests()
 {
-    String str = String("Hello");
+    String str = String("Hi, Barbie!");
     std::cout << "C-style string constructor: " << str << std::endl;
+    std::cout << "Конструктор c-style строки: " << str << std::endl;
     std::cout << "Length: " << str.length() << std::endl;
-
+    std::cout << "Длинна: " << str.length() << std::endl;
+    
     String str_copy = String(str);
     std::cout << "Copy Constructor: " << str_copy << std::endl;
+    std::cout << "Конструктор копирования: " << str_copy << std::endl;
 
     String str_ass_copy = str;
     std::cout << "Operator = (String): " << str_ass_copy << std::endl;
 
-    const char* c_string = "Hello";
+    const char* c_string = "Hi, Ken!";
     str_ass_copy = c_string;
     std::cout << "Operator = (C-style string): " << str_ass_copy << std::endl;
 
-    String str_inc = str + String(" world!");
+    String str_inc = str + String(" Hi, Ken!!");
     std::cout << "Operator + (String): " << str_inc << std::endl;
 
-    str_inc = str + new char[] { " world!" };
+    str_inc = str + new char[] { " Hi, Ken!" };
     std::cout << "Operator + (C-style string): " << str_inc << std::endl;
 
-    str += String(" world!");
+    str += String(" Hi, Ken!");
     std::cout << "Operator += (String): " << str << std::endl;
 
     str = String("Hello");
@@ -37,11 +40,12 @@ void run_tests()
 
 int main()
 {
+    std::setlocale(LC_ALL, "rus");
     std::vector<String> strings;
     std::string line;
     std::ifstream input("input.txt");
 
-    if (input.is_open())
+    if (input.is_open()) //проверка коммента
     {
         while (std::getline(input, line))
         {
@@ -64,7 +68,7 @@ int main()
     }
     output.close();
 
-    run_tests();
+    //run_tests();
 
     system("pause");
     return 0;
