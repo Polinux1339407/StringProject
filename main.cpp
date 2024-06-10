@@ -5,37 +5,34 @@
 #include <algorithm>
 #include "String.h"
 
-void run_tests()
+void Tests()
 {
     String str = String("Hi, Barbie!");
-    std::cout << "C-style string constructor: " << str << std::endl;
     std::cout << "Конструктор c-style строки: " << str << std::endl;
-    std::cout << "Length: " << str.length() << std::endl;
     std::cout << "Длинна: " << str.length() << std::endl;
     
-    String str_copy = String(str);
-    std::cout << "Copy Constructor: " << str_copy << std::endl;
-    std::cout << "Конструктор копирования: " << str_copy << std::endl;
+    String strAssm = str;
+    std::cout << "Оператор присваивания = (String): " << strAssm << std::endl;
 
-    String str_ass_copy = str;
-    std::cout << "Operator = (String): " << str_ass_copy << std::endl;
+    const char* cString = "Hi, Ken!";
+    strAssm = cString;
+    std::cout << "Оператор присваивания = (C-style string): " << strAssm << std::endl;
 
-    const char* c_string = "Hi, Ken!";
-    str_ass_copy = c_string;
-    std::cout << "Operator = (C-style string): " << str_ass_copy << std::endl;
+    String strCopy = String(str);
+    std::cout << "Конструктор копирования: " << strCopy << std::endl;
 
-    String str_inc = str + String(" Hi, Ken!!");
-    std::cout << "Operator + (String): " << str_inc << std::endl;
+    String strInc = str + String(" Hi, Ken!");
+    std::cout << "Оператор конкатенации + (String): " << strInc << std::endl;
 
-    str_inc = str + new char[] { " Hi, Ken!" };
-    std::cout << "Operator + (C-style string): " << str_inc << std::endl;
+    strInc = str + new char[] { " Hi, Ken!" };
+    std::cout << "Оператор конкатенации + (C-style string): " << strInc << std::endl;
 
     str += String(" Hi, Ken!");
-    std::cout << "Operator += (String): " << str << std::endl;
+    std::cout << "Оператор конкатенации += (String): " << str << std::endl;
 
     str = String("Hello");
     str += new char[] { " world!" };
-    std::cout << "Operator += (C-style string): " << str << std::endl;
+    std::cout << "Оператор конкатенации += (C-style string): " << str << std::endl;
 }
 
 int main()
@@ -45,7 +42,9 @@ int main()
     std::string line;
     std::ifstream input("input.txt");
 
-    if (input.is_open()) //проверка коммента
+    Tests();
+
+    if (input.is_open()) 
     {
         while (std::getline(input, line))
         {
@@ -67,8 +66,6 @@ int main()
         }
     }
     output.close();
-
-    //run_tests();
 
     system("pause");
     return 0;
